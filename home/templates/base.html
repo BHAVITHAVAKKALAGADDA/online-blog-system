@@ -1,0 +1,146 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <title>{% block title %} {% endblock %}</title>
+
+    <style>
+        /* Custom CSS */
+        body {
+            padding-top: 56px; /* Adjust based on navbar height */
+            background-color: #f8f9fa; /* Light gray background */
+        }
+
+        .navbar {
+            background-color: #17a2b8; /* Navy blue navbar */
+        }
+
+        .footer {
+            background-color: #f8f9fa; /* Light gray footer */
+        }
+    </style>
+</head>
+<body>
+<nav class="navbar navbar-expand-lg navbar-dark bg-info fixed-top">
+    <div class="container-fluid">
+        <a class="navbar-brand" href="#">Blog Zen</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
+                aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                <li class="nav-item">
+                    <a class="nav-link {% block homeactive %} {% endblock homeactive %}" aria-current="page" href="/">Home</a>
+                </li>
+                {% if user.is_authenticated %}
+                    <li class="nav-item">
+                        <a class="nav-link {% block add_blogs_active %} {% endblock add_blogs_active %}" href="/add_blogs/">Add Blogs</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link active" href="#">Hello {{request.user}}</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link {% block profileactive %} {% endblock profileactive %}" href="/profile/">Profile</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/logout/">Logout</a>
+                    </li>
+                {% else %}
+                    <li class="nav-item">
+                        <a class="nav-link {% block registeractive %} {% endblock registeractive %}" href="/register/">Register</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link {% block loginactive %} {% endblock loginactive %}" href="/login/">Login</a>
+                    </li>
+                {% endif %}
+            </ul>
+            <form class="d-flex" method="POST" action="/search/">{% csrf_token %}
+                <input class="form-control me-2" type="search" placeholder="Search" name="searched" id="searched" aria-label="Search">
+                <button href="/search/" class="btn btn-outline-secondary" type="submit">Search</button>
+            </form>
+        </div>
+    </div>
+</nav>
+{% block body %}
+{% endblock %}
+<!-- footer part start-->
+<footer class="footer-area" style="background-color: #34A1FC; color: #fff; padding: 50px 0; text-align: center;">
+    <div class="container">
+        <div class="row justify-content-between">
+            <div class="col-sm-6 col-md-5">
+                <div class="single-footer-widget">
+                    <h4>Discover Blog Locations</h4>
+                    <ul>
+                        <li><a href="https://www.google.com/maps/place/Miami+Beach,+FL,+USA/data=!4m2!3m1!1s0x88d9a6172bfeddb9:0x37be1741259463eb?sa=X&ved=1t:242&ictx=111">Miami, USA</a></li>
+                        <li><a href="https://www.google.com/maps/place/California,+USA/data=!4m2!3m1!1s0x808fb9fe5f285e3d:0x8b5109a227086f55?sa=X&ved=1t:242&ictx=111">California, USA</a></li>
+                        <li><a href="https://www.google.com/maps/place/London,+UK/@51.5286416,-0.1015987,11z/data=!3m1!4b1!4m6!3m5!1s0x47d8a00baf21de75:0x52963a5addd52a99!8m2!3d51.5072178!4d-0.1275862!16zL20vMDRqcGw?entry=ttu">London, UK</a></li>
+                        <li><a href="https://www.google.com/maps/place/Paris,+France/@48.8588548,2.347035,12z/data=!3m1!4b1!4m6!3m5!1s0x47e66e1f06e2b70f:0x40b82c3688c9460!8m2!3d48.856614!4d2.3522219!16zL20vMDVxdGo?entry=ttu">Paris, France </a></li>
+                        <li><a href="https://www.google.com/maps/place/Mt+Everest/data=!4m2!3m1!1s0x39e854a215bd9ebd:0x576dcf806abbab2!5m1!1e4?sa=X&ved=1t:242&ictx=111">Mount Everest, India</a></li>
+                        <li><a href="https://www.google.com/maps/place/Sydney+NSW,+Australia/@-33.8482439,150.9319747,10z/data=!3m1!4b1!4m6!3m5!1s0x6b129838f39a743f:0x3017d681632a850!8m2!3d-33.8688197!4d151.2092955!16zL20vMDZ5NTc?entry=ttu">Sidney, Australia</a></li>
+                    </ul>
+                    <br><br>
+                </div>
+            </div>
+            <div class="col-sm-6 col-md-4">
+                <div class="single-footer-widget">
+                    <h4>Subscribe Newsletter</h4>
+                    <div class="form-wrap" id="mc_embed_signup">
+                        <form target="_blank"
+                              action="https://spondonit.us12.list-manage.com/subscribe/post?u=1462626880ade1ac87bd9c93a&amp;id=92a4423d01"
+                              method="get" class="form-inline">
+                            <input class="form-control" name="EMAIL" placeholder="Your Email Address"
+                                   onfocus="this.placeholder = ''" onblur="this.placeholder = 'Your Email Address '"
+                                   required="" type="email">
+                            <button class="click-btn btn btn-default text-uppercase"> <i class="far fa-paper-plane"></i>
+                            </button>
+                            <div style="position: absolute; left: -5000px;">
+                                <input name="b_36c4fd991d266f23781ded980_aefe40901a" tabindex="-1" value=""
+                                       type="text">
+                            </div>
+                            <div class="info"></div>
+                        </form>
+                    </div>
+                    <p>Subscribe our newsletter to get update news and offers</p>
+                </div>
+            </div>
+            <div class="col-sm-6 col-md-3">
+                <div class="single-footer-widget footer_icon">
+                    <h4>Contact Us</h4>
+                    <p>560009, Majestic, Bangalore, Karnataka, India
+                        +91 6302 026 535</p>
+                    <span>contact@blogzen.com</span>
+                    <div class="social-icons">
+                        <a href="#"><i class="ti-facebook"></i></a>
+                        <a href="#"><i class="ti-twitter-alt"></i></a>
+                        <a href="#"><i class="ti-pinterest"></i></a>
+                        <a href="#"><i class="ti-instagram"></i></a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="container-fluid">
+        <div class="row justify-content-center">
+            <div class="col-lg-12">
+                <div class="copyright_part_text text-center">
+                    <p class="footer-text m-0"><!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
+                        Copyright Blog Zen &copy;<script>document.write(new Date().getFullYear());</script>
+                        All rights reserved</i>
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+</footer>
+<!-- footer part end-->
+
+
+</body>
+</html>
